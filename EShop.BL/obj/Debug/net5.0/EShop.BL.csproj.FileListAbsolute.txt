@@ -1,0 +1,15 @@
+C:\Users\user\source\repos\EShop\EShop.BL\bin\Debug\net5.0\EShop.BL.deps.json
+C:\Users\user\source\repos\EShop\EShop.BL\bin\Debug\net5.0\EShop.BL.dll
+C:\Users\user\source\repos\EShop\EShop.BL\bin\Debug\net5.0\ref\EShop.BL.dll
+C:\Users\user\source\repos\EShop\EShop.BL\bin\Debug\net5.0\EShop.BL.pdb
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\EShop.BL.csprojAssemblyReference.cache
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\EShop.BL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\EShop.BL.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\EShop.BL.AssemblyInfo.cs
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\EShop.BL.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\EShop.BL.dll
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\ref\EShop.BL.dll
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\EShop.BL.pdb
+C:\Users\user\source\repos\EShop\EShop.BL\bin\Debug\net5.0\EShop.DAL.dll
+C:\Users\user\source\repos\EShop\EShop.BL\bin\Debug\net5.0\EShop.DAL.pdb
+C:\Users\user\source\repos\EShop\EShop.BL\obj\Debug\net5.0\EShop.BL.csproj.CopyComplete

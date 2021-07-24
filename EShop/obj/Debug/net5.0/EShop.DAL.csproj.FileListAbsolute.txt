@@ -1,0 +1,15 @@
+C:\Users\user\source\repos\EShop\EShop\bin\Debug\net5.0\EShop.DAL.deps.json
+C:\Users\user\source\repos\EShop\EShop\bin\Debug\net5.0\EShop.DAL.runtimeconfig.json
+C:\Users\user\source\repos\EShop\EShop\bin\Debug\net5.0\EShop.DAL.runtimeconfig.dev.json
+C:\Users\user\source\repos\EShop\EShop\bin\Debug\net5.0\EShop.DAL.dll
+C:\Users\user\source\repos\EShop\EShop\bin\Debug\net5.0\ref\EShop.DAL.dll
+C:\Users\user\source\repos\EShop\EShop\bin\Debug\net5.0\EShop.DAL.pdb
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.csprojAssemblyReference.cache
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.AssemblyInfo.cs
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.dll
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\ref\EShop.DAL.dll
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.pdb
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.genruntimeconfig.cache
