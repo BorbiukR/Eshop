@@ -5,7 +5,6 @@ using Eshop.DAL.Models;
 using EShop.BL.DTOs;
 using EShop.BL.Enums;
 using EShop.BL.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace EShop.BL.Services
@@ -14,11 +13,12 @@ namespace EShop.BL.Services
     {
         public AdminService(IUnitOfWork unit, IMapper mapper) : base(unit, mapper)  { }
 
-        public string AddProduct(string productName, decimal productPrice, string productDescription, ProductCategoryDTO productCategory)
+        public string AddProduct(string productName, 
+                                decimal productPrice, 
+                                string productDescription,
+                                ProductCategoryDTO productCategory)
         {
-            bool success = false;
-
-            if (productPrice <= 0 || productPrice >= 800000)
+            if (productPrice <= 0 || productPrice >= 8_000_000_000)
                 return "Invalid price!";
 
             var product  = new ProductDTO
@@ -34,11 +34,7 @@ namespace EShop.BL.Services
             _unit.Products.AddProduct(productMapper);
             _unit.Save();
 
-            success = true;
-
-            return success == true
-                ? "Product added."
-                : "Name is invalid or already taken!";
+            return "Product added.";
         }
 
         public string ChangeOrderStatus(int orderId, OrderStatus status)
@@ -71,6 +67,7 @@ namespace EShop.BL.Services
 
             order.Status = status;
 
+            _unit.Orders.Update(order);
             _unit.Save();
             
             return "Status changed.";
@@ -78,68 +75,54 @@ namespace EShop.BL.Services
 
         public string ChangeUserPassword(int userId, string newUserPassword)
         {
-            //_console.WriteLine("Input the ID of user you want to modify:");
+            var user = _unit.Users.GetUserById(userId); 
+            
+            if (user is null)
+                return "No user thith such ID";
 
-            //int userId;
+            if (string.IsNullOrWhiteSpace(newUserPassword))
+                return "Invalid password!";
 
-            //try
-            //{
-            //    userId = Convert.ToInt32(_console.ReadLine());
-            //}
-            //catch (OverflowException)
-            //{
-            //    return "outside the range of the Int32 type.";
-            //}
-            //catch (FormatException)
-            //{
-            //    return "Not valid Id!";
-            //}
+            user.Password = newUserPassword;
+            
+            _unit.Users.Update(user);
+            _unit.Save();
 
-            //var user = _repo.GetUserById(userId);
-            //if (user is null)
-            //    return "No user thith such ID";
-
-            //_console.WriteLine("New password:");
-            //var newPassword = _console.ReadLine();
-
-            //if (string.IsNullOrWhiteSpace(newPassword))
-            //    return "Invalid password!";
-
-            //user.Password = newPassword;
-            //_repo.UpdateUser(user);
-
-            //return "Password changed.";
-            throw new NotImplementedException();
+            return "Password changed.";
         }
 
         public string ModifyProduct(int productId, string newProductName = default, decimal newProductPrice = default, string newProductDescription = default, ProductCategoryDTO newProductCategory = default)
         {
-            //_console.WriteLine("Input ID of the product:");
-            //int prodId = Convert.ToInt32(_console.ReadLine());
+            if (newProductName == default &&
+                newProductPrice == default &&
+                newProductDescription == default &&
+                newProductName == default)
+            {
+                return "You have not made any changes.";
+            }
 
-            //var prod = _repo.GetProductById(prodId);
+            var oldProduct = _unit.Products.GetProductById(productId);
 
-            //if (prod == null)
-            //    return "No product with such ID";
+            if (oldProduct == null)
+                return "No product with such ID";
 
-            //var newProd = new Product();
+            var newProduct = new ProductDTO() 
+            { 
+                Name = newProductName,
+                Price = newProductPrice,
+                Description = newProductDescription,
+                Category = newProductCategory
+            };
 
-            //_console.WriteLine("New name:");
-            //newProd.Name = _console.ReadLine();
+            if (newProduct.Price <= 0)
+                return "Invalid price!";
 
-            //_console.WriteLine("New price:");
-            //newProd.Price = Convert.ToInt32(_console.ReadLine());
+            var mapperNewProduct = _mapper.Map<Product>(newProduct);
 
-            //if (newProd.Price <= 0)
-            //    return "Invalid price!";
+            _unit.Products.UpdateProduct(mapperNewProduct);
+            _unit.Save();
 
-            //bool success = _repo.UpdateProduct(prodId, newProd);
-
-            //if (success)
-            //    return "Product changed.";
-
-            //return "Invaliv product data";
-            throw new NotImplementedException();
+            return "Product changed.";
         }
 
         public string SeeOrdersOfUser(int userId)
