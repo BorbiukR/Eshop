@@ -30,6 +30,7 @@ namespace DAL.UnitsOfWork
                 return _users;
             }
         }
+
         public IProductRepository Products
         {
             get
@@ -41,6 +42,7 @@ namespace DAL.UnitsOfWork
                 return _products;
             }
         }
+
         public IOrderRepository Orders
         {
             get

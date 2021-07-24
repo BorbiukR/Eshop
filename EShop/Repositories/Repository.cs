@@ -16,14 +16,14 @@ namespace EShop.DAL.Repositories
         }
 
         public void Create(T entity) => _eShopContext.Set<T>().Add(entity);
-        
+
+        public void Update(T entity) => _eShopContext.Set<T>().Update(entity);
+
         public void Delete(T entity) => _eShopContext.Set<T>().Remove(entity);
         
         public IEnumerable<T> FindAll() => _eShopContext.Set<T>();
         
         public IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression) =>
-            _eShopContext.Set<T>().Where(expression);
-        
-        public void Update(T entity) => _eShopContext.Set<T>().Update(entity);     
+            _eShopContext.Set<T>().Where(expression);             
     }
 }

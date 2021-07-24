@@ -3,7 +3,6 @@
     public interface IGeneralLogicForUserAndAdmin
     {
         string AddToOrder(string name);
-
         string CancelOrder(int userIdId);
 
         delegate void LogOutHendler();

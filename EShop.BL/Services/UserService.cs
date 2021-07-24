@@ -14,6 +14,7 @@ namespace EShop.BL.Services
         public UserService(IUnitOfWork unit, IMapper mapper) : base(unit, mapper) { }
 
         public event IGeneralLogicForUserAndAdmin.LogOutHendler NotifyOfLoggingOut;
+
         private protected List<OrderItemDTO> Cart { get; set; } = new List<OrderItemDTO>();
 
         public string AddToOrder(string name)
@@ -33,8 +34,8 @@ namespace EShop.BL.Services
                 var newItemMapper = _mapper.Map<ProductDTO>(product);
                 var newItem = new OrderItemDTO() { ProductDTO = newItemMapper };
                 Cart.Add(newItem);
-
-                _unit.Save();       // TODO: прописати
+                // TODO : тут не зберігаються продукти в корзину
+                _unit.Save();       
 
                 return newItem.ToString();
             }
@@ -60,6 +61,7 @@ namespace EShop.BL.Services
             order.Status = OrderStatus.CanceledByUser;
 
             _unit.Users.GetUserById(userId).Balance += order.TotalPrice;
+            _unit.Save();
 
             return $"Order with ID {userId} cancelled. Money returned";
         }
@@ -72,6 +74,8 @@ namespace EShop.BL.Services
                 return "Wrong password";
 
             user.Password = newPassword;
+
+            _unit.Save();
 
             return "Password changed.";
         }
@@ -96,12 +100,14 @@ namespace EShop.BL.Services
                     return "There is no order in your history with such ID.";
 
                 var order = _unit.Orders.GetOrderById(orderId).Status = OrderStatus.Received;
-               
+
+                _unit.Save();
+
                 return $"Status 'Received' set to order with ID {orderId}";
             }
             catch (OverflowException)
             {
-                return "Outside the range of the Int32 type.";
+                return "Outside the range of the Int type.";
             }
             catch (FormatException)
             {

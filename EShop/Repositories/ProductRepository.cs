@@ -22,9 +22,9 @@ namespace EShop.DAL.Repositories
             => _eShopContext.Set<Product>().ToList();
 
         public Product GetProductById(int prodId) 
-            => (Product)_eShopContext.Set<Product>().Where(x => x.ProductId == prodId);
+            => _eShopContext.Set<Product>().Where(x => x.ProductId == prodId).FirstOrDefault();
 
         public Product GetProductByName(string productName) 
-            => (Product)_eShopContext.Set<Product>().Where(x => x.Name == productName);
+            => _eShopContext.Set<Product>().Where(x => x.Name == productName).FirstOrDefault();
     }
 }

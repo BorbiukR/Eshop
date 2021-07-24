@@ -1,4 +1,5 @@
 ﻿using Eshop.DAL.Models;
+using EShop.DAL.Enums;
 using EShop.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +11,11 @@ namespace EShop.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<OrderItem>  OrderItems { get; set; }
+        public DbSet<ProductCategory> ProductCategorys { get; set; }
+        
 
         public EShopContext() { }
+
         public EShopContext(DbContextOptions<EShopContext> options) : base(options)
         {
             Database.EnsureCreated();
@@ -41,7 +45,19 @@ namespace EShop.DAL
 
             modelBuilder.Entity<Product>(entity =>
             {
+                entity.HasOne(x => x.ProductCategory)
+                    .WithOne(x => x.Product);
                 entity.HasKey(x => x.ProductId);
+            });
+
+            modelBuilder.Entity<ProductCategory>(entity =>
+            {
+                entity.HasKey(x => x.ProductCategoryId);
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.HasKey(x => x.OrderItemId);
             });
         }
     }

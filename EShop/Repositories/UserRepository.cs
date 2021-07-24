@@ -22,9 +22,9 @@ namespace EShop.DAL.Repositories
             => _eShopContext.Set<User>().ToList();
 
         public User GetUserByEmail(string email)
-            => (User)_eShopContext.Set<User>().Where(x => x.Email == email);
+            => _eShopContext.Set<User>().Where(x => x.Email == email).FirstOrDefault();
 
         public User GetUserById(int userId)
-            => (User)_eShopContext.Set<User>().Where(x => x.UserId == userId);
+            => _eShopContext.Set<User>().Where(x => x.UserId == userId).FirstOrDefault();
     }
 }

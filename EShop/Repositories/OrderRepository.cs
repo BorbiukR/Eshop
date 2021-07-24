@@ -1,5 +1,4 @@
-﻿using Eshop.DAL.Enums;
-using Eshop.DAL.Models;
+﻿using Eshop.DAL.Models;
 using EShop.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +19,9 @@ namespace EShop.DAL.Repositories
             => _eShopContext.Set<Order>().Remove(order);
 
         public Order GetOrderById(int orderId) 
-            => (Order)_eShopContext.Set<Order>().Where(x  => x.OrderId == orderId);
+            => _eShopContext.Set<Order>().Where(x  => x.OrderId == orderId).FirstOrDefault();
 
         public List<Order> GetOrderByUserId(int userId)
             => _eShopContext.Set<Order>().ToList();
-
-        public void SetNewOrderStatus(int orderId, OrderStatus status)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

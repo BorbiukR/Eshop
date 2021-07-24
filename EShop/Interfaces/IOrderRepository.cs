@@ -1,5 +1,4 @@
-﻿using Eshop.DAL.Enums;
-using Eshop.DAL.Interfaces;
+﻿using Eshop.DAL.Interfaces;
 using Eshop.DAL.Models;
 using System.Collections.Generic;
 
@@ -12,6 +11,5 @@ namespace EShop.DAL.Interfaces
         void DeleteOrder(Order order);
         List<Order> GetOrderByUserId(int userId);
         Order GetOrderById(int orderId);
-        void SetNewOrderStatus(int orderId, OrderStatus status);
     }
 }
