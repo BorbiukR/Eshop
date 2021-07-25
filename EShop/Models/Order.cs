@@ -7,7 +7,7 @@ namespace Eshop.DAL.Models
 {
     public class Order
     {
-        [Key]
+        [Key]   // TODO: розібратися із модифікаторами доступу set
         public int OrderId { get; }
         public int UserId { get; set; }
         public OrderStatus Status { get; set; }

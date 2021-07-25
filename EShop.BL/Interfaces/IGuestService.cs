@@ -2,7 +2,7 @@
 
 namespace EShop.BL.Interfaces
 {
-    public interface IGuestSerivece : IGeneralLogicForAllRoles
+    public interface IGuestService : IGeneralLogicForAllRoles
     {
         delegate void LogInHendler(UserDTO user);
         event LogInHendler NotifyOfLogginIn;

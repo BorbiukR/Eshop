@@ -9,16 +9,16 @@ using System.Linq;
 
 namespace EShop.BL.Services
 {
-    public class GuestService : IGuestSerivece
+    public class GuestService : IGuestService
     {
-        public event IGuestSerivece.LogInHendler NotifyOfLogginIn;
+        public event IGuestService.LogInHendler NotifyOfLogginIn;
         public readonly IMapper _mapper;
         public readonly IUnitOfWork _unit;
 
         public GuestService(IUnitOfWork unit, IMapper mapper)
         {
-            _mapper = mapper;
             _unit = unit;
+            _mapper = mapper;
         }
 
         public List<ProductDTO> GetAllProducts()
