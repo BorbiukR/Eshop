@@ -32,15 +32,14 @@ namespace EShop.DAL
             {
                 entity.HasKey(x => x.UserId);
                 entity.HasOne(x => x.Order)
-                    .WithOne(x => x.User); 
+                    .WithOne(x => x.User);       
             });
 
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.HasKey(x => x.OrderId);
                 entity.HasMany(x => x.OrderItems)
-                    .WithOne(x => x.Order)
-                    .HasForeignKey(x => x.OrderId);
+                    .WithOne(x => x.Order);
             });
 
             modelBuilder.Entity<Product>(entity =>

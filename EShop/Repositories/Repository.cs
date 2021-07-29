@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 
 namespace EShop.DAL.Repositories
-{
+{ 
     abstract class Repository<T> : IRepository<T> where T : class
     {
         protected internal readonly EShopContext _eShopContext;

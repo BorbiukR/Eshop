@@ -32,8 +32,8 @@ namespace EShop.API.Extentions
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader());
             });
         }
 

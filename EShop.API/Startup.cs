@@ -28,7 +28,7 @@ namespace EShop.API
             services.ConfigureCors();
             services.ConfigureIISIntegration();
 
-            string connection = Configuration.GetConnectionString("EShopDB");
+            string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<EShopContext>(options => options.UseSqlServer(connection));
 
             services.AddControllers();

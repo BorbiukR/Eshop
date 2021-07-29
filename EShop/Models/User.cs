@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Eshop.DAL.Models
+﻿namespace Eshop.DAL.Models
 {
     public class User
     {
-        [Key]
         public int UserId { get; }
         public string Email { get; set; }
         public string Password { get; set; }

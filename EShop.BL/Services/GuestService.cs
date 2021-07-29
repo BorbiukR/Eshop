@@ -24,13 +24,16 @@ namespace EShop.BL.Services
         public List<ProductDTO> GetAllProducts()
         {
             var products = _unit.Products.GetAllProducts();
+           
+            if (products == null)
+                return null;
 
             return _mapper.Map<List<ProductDTO>>(products);
         }
 
         public ProductDTO GetProductById(int productId)
         {
-            var product = _unit.Products.FindByCondition(x => x.ProductId.Equals(productId)).FirstOrDefault();
+            var product = _unit.Products.FindByCondition(x => x.ProductId == productId).FirstOrDefault();
             
             if (product == null)
                 return null;
@@ -40,7 +43,7 @@ namespace EShop.BL.Services
 
         public ProductDTO GetProductByName(string productName)
         {
-            var product = _unit.Products.FindByCondition(x => x.Name.Equals(productName)).FirstOrDefault();
+            var product = _unit.Products.FindByCondition(x => x.Name == productName).FirstOrDefault();
 
             if (product == null)
                 return null;

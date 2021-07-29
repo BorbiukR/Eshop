@@ -20,9 +20,4 @@
     <ProjectReference Include="..\EShop\EShop.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Request\" />
-    <Folder Include="Models\Response\" />
-  </ItemGroup>
-
 </Project>

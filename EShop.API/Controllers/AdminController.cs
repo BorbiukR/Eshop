@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DAL.Interfaces;
+using EShop.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace EShop.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unit;
+        private readonly IAdminService _adminService;
 
-        public AdminController(IUnitOfWork unit, IMapper mapper)
+        public AdminController(IUnitOfWork unit, IMapper mapper, IAdminService adminService)
         {
             _unit = unit;
             _mapper = mapper;
+            _adminService = adminService;
         }
     }
 }
