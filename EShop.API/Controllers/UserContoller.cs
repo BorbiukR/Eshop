@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DAL.Interfaces;
+using Eshop.DAL.Interfaces;
 using EShop.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;

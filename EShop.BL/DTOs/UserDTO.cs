@@ -2,7 +2,7 @@
 {
     public class UserDTO
     {
-        public int UserDTOId { get; }
+        public int Id { get; }
         public string Email { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }

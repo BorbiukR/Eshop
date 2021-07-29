@@ -1,6 +1,6 @@
 ﻿using EShop.DAL.Interfaces;
 
-namespace DAL.Interfaces
+namespace Eshop.DAL.Interfaces
 {
     public interface IUnitOfWork
     {

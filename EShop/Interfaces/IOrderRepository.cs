@@ -1,15 +1,7 @@
 ﻿using Eshop.DAL.Interfaces;
-using Eshop.DAL.Models;
-using System.Collections.Generic;
+using EShop.DAL.Models;
 
 namespace EShop.DAL.Interfaces
 {
-    public interface IOrderRepository : IRepository<Order> 
-    {
-        void AddOrder(Order order);
-        void UpdateOrder(Order order);
-        void DeleteOrder(Order order);
-        List<Order> GetOrderByUserId(int userId);
-        Order GetOrderById(int orderId);
-    }
+    public interface IOrderRepository : IRepository<Order> { }
 }

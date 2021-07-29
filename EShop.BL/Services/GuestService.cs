@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using DAL.Interfaces;
-using Eshop.DAL.Models;
+using Eshop.DAL.Interfaces;
 using EShop.BL.DTOs;
 using EShop.BL.Interfaces;
+using EShop.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,19 +21,19 @@ namespace EShop.BL.Services
             _mapper = mapper;
         }
 
-        public List<ProductDTO> GetAllProducts()
+        public IEnumerable<ProductDTO> GetAllProducts()
         {
-            var products = _unit.Products.GetAllProducts();
+            var products = _unit.Products.FindAll();
            
             if (products == null)
                 return null;
 
-            return _mapper.Map<List<ProductDTO>>(products);
+            return _mapper.Map<IEnumerable<ProductDTO>>(products);
         }
 
         public ProductDTO GetProductById(int productId)
         {
-            var product = _unit.Products.FindByCondition(x => x.ProductId == productId).FirstOrDefault();
+            var product = _unit.Products.FindByCondition(x => x.Id == productId).FirstOrDefault();
             
             if (product == null)
                 return null;
@@ -53,7 +53,7 @@ namespace EShop.BL.Services
 
         public string LogIn(string email, string password)
         {
-            var user =  _unit.Users.GetAllUsers().FirstOrDefault(u => (u.Email == email) && (u.Password == password));
+            var user =  _unit.Users.FindAll().FirstOrDefault(u => (u.Email == email) && (u.Password == password));
 
             if (user != null)
             {
@@ -81,7 +81,7 @@ namespace EShop.BL.Services
             var newUser = new UserDTO() { Email = email, Password = password };
             var mapperNewUser = _mapper.Map<User>(newUser);
            
-            _unit.Users.AddUser(mapperNewUser);
+            _unit.Users.Add(mapperNewUser);
             _unit.Save();
 
             NotifyOfLogginIn?.Invoke(newUser);

@@ -1,5 +1,5 @@
-﻿using DAL.Interfaces;
-using DAL.UnitsOfWork;
+﻿using DAL.UnitsOfWork;
+using Eshop.DAL.Interfaces;
 using EShop.BL.Interfaces;
 using EShop.BL.Services;
 using Microsoft.AspNetCore.Builder;

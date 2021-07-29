@@ -1,8 +1,8 @@
-﻿namespace Eshop.DAL.Models
+﻿namespace EShop.DAL.Models
 {
     public class User
     {
-        public int UserId { get; }
+        public int Id { get; }
         public string Email { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }

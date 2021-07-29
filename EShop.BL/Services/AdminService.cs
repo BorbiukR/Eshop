@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using DAL.Interfaces;
-using Eshop.DAL.Enums;
-using Eshop.DAL.Models;
+using Eshop.DAL.Interfaces;
 using EShop.BL.DTOs;
-using EShop.BL.Enums;
 using EShop.BL.Interfaces;
+using EShop.DAL.Models;
+using EShop.DAL.Models.Enums;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EShop.BL.Services
 {
@@ -31,7 +32,7 @@ namespace EShop.BL.Services
 
             var productMapper = _mapper.Map<Product>(product);
             
-            _unit.Products.AddProduct(productMapper);
+            _unit.Products.Add(productMapper);
             _unit.Save();
 
             return "Product added.";
@@ -39,7 +40,7 @@ namespace EShop.BL.Services
 
         public string ChangeOrderStatus(int orderId, OrderStatus status)
         {
-            var order = _unit.Orders.GetOrderById(orderId);
+            var order = _unit.Orders.FindByCondition(x => x.Id == orderId).FirstOrDefault();
 
             if (order == null)
                 return "No order with such ID!";
@@ -75,8 +76,9 @@ namespace EShop.BL.Services
 
         public string ChangeUserPassword(int userId, string newUserPassword)
         {
-            var user = _unit.Users.GetUserById(userId); 
-            
+            var user = _unit.Users.FindByCondition(x => x.Id == userId).FirstOrDefault();
+
+
             if (user is null)
                 return "No user thith such ID";
 
@@ -101,7 +103,7 @@ namespace EShop.BL.Services
                 return "You have not made any changes.";
             }
 
-            var oldProduct = _unit.Products.GetProductById(productId);
+            var oldProduct = _unit.Products.FindByCondition(x => x.Id == productId);
 
             if (oldProduct == null)
                 return "No product with such ID";
@@ -119,7 +121,7 @@ namespace EShop.BL.Services
 
             var mapperNewProduct = _mapper.Map<Product>(newProduct);
 
-            _unit.Products.UpdateProduct(mapperNewProduct);
+            _unit.Products.Update(mapperNewProduct);
             _unit.Save();
 
             return "Product changed.";
@@ -130,39 +132,49 @@ namespace EShop.BL.Services
             if (!UserExists(userId))
                 return "No user with such Id!";
 
-            var orders = _unit.Orders.GetOrderByUserId(userId); 
+            var orders = _unit.Orders.FindByCondition(x => x.UserId == userId);
 
-            if (orders.Count == 0)
+            if (!orders.Any())
                 return "User hasn't made any purchase yet.";
 
-            return GetStringOfEnumerable(orders);
+            foreach (var item in orders)
+            {
+                return $"{item.Id} - {item.Status}- {item.TotalPrice}- {item.UserId}";
+            }
+
+            return null;
         }
 
         private bool UserExists(int userId)
         {
-            var user = _unit.Users.GetUserById(userId);
+            var user = _unit.Users.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
-            return user.UserId == userId 
+            return user.Id == userId 
                 ? true 
                 : false;
         }
 
         public string SeeUsersInfo()
         {
-            var users = _unit.Users.GetAllUsers();
+            var users = _unit.Users.FindAll();
 
-            return GetStringOfEnumerable(users);
+            if (users != null)
+            {
+                foreach (var item in users)
+                {
+                    return $"{item.Id} - {item.Email}- {item.Password}- {item.IsAdmin}- {item.Balance}";
+                }
+            }
+
+            return null;
         }
 
-        // TODO : застосувати IEnumerable і IEnumerator з оператором yield ?
-        private static string GetStringOfEnumerable<T>(IEnumerable<T> enumer)
+        public static IEnumerator GetEnumerator<T>(IEnumerable<T> enumer)
         {
-            string res = string.Empty;
-
             foreach (T item in enumer)
-                res += item.ToString() + "\n";
-
-            return res;
+            {
+                yield return item;
+            }
         }
     }
 }

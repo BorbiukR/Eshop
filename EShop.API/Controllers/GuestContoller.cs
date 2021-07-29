@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using DAL.Interfaces;
-using Eshop.DAL.Models;
+using Eshop.DAL.Interfaces;
 using EShop.API.Models.Request;
 using EShop.BL.DTOs;
 using EShop.BL.Interfaces;
@@ -34,7 +33,7 @@ namespace EShop.API.Controllers
         {
             try
             {
-                var products = _guestService.GetAllProducts();
+                var products =  _guestService.GetAllProducts();
                 if (products == null)
                 {
                     return StatusCode(404, "Product not found");

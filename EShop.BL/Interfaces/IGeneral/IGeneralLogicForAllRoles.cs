@@ -5,7 +5,7 @@ namespace EShop.BL.Interfaces
 {
     public interface IGeneralLogicForAllRoles
     {
-        List<ProductDTO> GetAllProducts();
+        IEnumerable<ProductDTO> GetAllProducts();
         ProductDTO GetProductByName(string productName);
         ProductDTO GetProductById(int productId);      
     }

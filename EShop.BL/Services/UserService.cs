@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using DAL.Interfaces;
-using Eshop.DAL.Enums;
+using Eshop.DAL.Interfaces;
 using EShop.BL.DTOs;
 using EShop.BL.Interfaces;
+using EShop.DAL.Models;
+using EShop.DAL.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,39 +17,46 @@ namespace EShop.BL.Services
         public event IGeneralLogicForUserAndAdmin.LogOutHendler NotifyOfLoggingOut;
 
         private protected List<OrderItemDTO> Cart { get; set; } = new List<OrderItemDTO>();
-
-        public string AddToOrder(string name)
+        
+        public string AddToOrder(string name, OrderDTO orderDTO)
         {
-            var product = _unit.Products.GetProductByName(name);
-
+            var product = _unit.Products.FindByCondition(x => x.Name == name).FirstOrDefault();
             if (product == null)
                 return "There is no such product in the store.";
 
-            if (PresentInCart(product.Name))
+
+            var newOrder = _mapper.Map<Order>(orderDTO);
+
+            var order = _unit.Orders.FindByCondition(x => x.Id == newOrder.Id).FirstOrDefault();
+
+            if (order == null)
+                return "There is no such order";
+
+            bool orderAlreadyExsist = newOrder.Id == order.Id;
+
+            if (orderAlreadyExsist)
             {
-                var productInCart = Cart.FirstOrDefault(item => item.ProductDTO.Name == product.Name);
-                return productInCart.ToString();
+                return $"Order with such {newOrder.Id} Id already exsist";
             }
             else
-            {
-                var newItemMapper = _mapper.Map<ProductDTO>(product);
-                var newItem = new OrderItemDTO() { ProductDTO = newItemMapper };
-                Cart.Add(newItem);
-                // TODO : тут не зберігаються продукти в корзину
+            {            
+                var newProductMapper = _mapper.Map<ProductDTO>(product);
+                var newItem = new OrderItemDTO() { ProductDTO = newProductMapper };
+                var newItemMapper = _mapper.Map<OrderItem>(newItem);
+
+                newOrder.OrderItems.Add(newItemMapper);
                 _unit.Save();       
 
                 return newItem.ToString();
             }
         }
-
-        private protected bool PresentInCart(string name) => Cart.Any(item => item.ProductDTO.Name == name);
-
+      
         public string CancelOrder(int userId)
         {
-            if (!_unit.Orders.GetOrderByUserId(userId).Select(x => x.OrderId).Contains(userId))
+            if (!_unit.Orders.FindByCondition(x => x.UserId == userId).Select(x => x.Id).Contains(userId))
                 return "There is no order in your history with such ID.";
 
-            var order = _unit.Orders.GetOrderById(userId);
+            var order = _unit.Orders.FindByCondition(x => x.UserId == userId).FirstOrDefault();
 
             if (order.Status == OrderStatus.Received
                 || order.Status == OrderStatus.Complete
@@ -60,7 +68,7 @@ namespace EShop.BL.Services
 
             order.Status = OrderStatus.CanceledByUser;
 
-            _unit.Users.GetUserById(userId).Balance += order.TotalPrice;
+            _unit.Users.FindByCondition(x => x.Id == userId).FirstOrDefault().Balance += order.TotalPrice;
             _unit.Save();
 
             return $"Order with ID {userId} cancelled. Money returned";
@@ -68,7 +76,7 @@ namespace EShop.BL.Services
 
         public string ChangePassword(int userId, string oldPassword, string newPassword)
         {
-            var user = _unit.Users.GetUserById(userId);
+            var user = _unit.Users.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
             if (oldPassword != user.Password)
                 return "Wrong password";
@@ -86,20 +94,22 @@ namespace EShop.BL.Services
             return "Logging Out...";
         }
 
-        public List<OrderDTO> SeeOrderHistory(int userId)
+        public IEnumerable<OrderDTO> SeeOrderHistory(int userId) 
         {
-            var orders = _unit.Orders.GetOrderByUserId(userId);
-            return _mapper.Map<List<OrderDTO>>(orders);
+            var orders = _unit.Orders.FindByCondition(x => x.UserId == userId);
+            return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
         public string SetStatusReceived(int orderId)
         {
             try
             {
-                if (_unit.Orders.GetOrderById(orderId).OrderId == orderId)
+                if (_unit.Orders.FindByCondition(x => x.Id == orderId).FirstOrDefault().Id == orderId)
                     return "There is no order in your history with such ID.";
 
-                var order = _unit.Orders.GetOrderById(orderId).Status = OrderStatus.Received;
+                var order = _unit.Orders.FindByCondition(x => x.Id == orderId)
+                                        .FirstOrDefault()
+                                        .Status = OrderStatus.Received;
 
                 _unit.Save();
 

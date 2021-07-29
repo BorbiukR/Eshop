@@ -1,4 +1,4 @@
-﻿using DAL.Interfaces;
+﻿using Eshop.DAL.Interfaces;
 using EShop.DAL;
 using EShop.DAL.Interfaces;
 using EShop.DAL.Repositories;

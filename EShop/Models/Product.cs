@@ -1,10 +1,8 @@
-﻿using EShop.DAL.Enums;
-
-namespace Eshop.DAL.Models
+﻿namespace EShop.DAL.Models
 {
     public class Product
     {
-        public int ProductId { get; }
+        public int Id { get; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }

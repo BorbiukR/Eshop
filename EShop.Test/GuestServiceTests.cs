@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DAL.Interfaces;
 using EShop.BL.Services;
 using System;
 using System.Collections.Generic;

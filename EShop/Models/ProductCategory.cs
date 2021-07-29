@@ -1,10 +1,8 @@
-﻿using Eshop.DAL.Models;
-
-namespace EShop.DAL.Enums
+﻿namespace EShop.DAL.Models
 {
     public class ProductCategory 
     {
-        public int ProductCategoryId { get; set; }
+        public int Id { get; }
         public string Name { get; set; }
         public int ProductId { get; set; }
 

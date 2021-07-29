@@ -1,5 +1,5 @@
-﻿using Eshop.DAL.Enums;
-using EShop.BL.Enums;
+﻿using EShop.BL.DTOs;
+using EShop.DAL.Models.Enums;
 
 namespace EShop.BL.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿namespace Eshop.DAL.Enums
+﻿namespace EShop.DAL.Models.Enums
 {
     public enum OrderStatus
     {

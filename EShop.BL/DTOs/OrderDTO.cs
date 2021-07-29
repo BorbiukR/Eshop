@@ -5,12 +5,12 @@ namespace EShop.BL.DTOs
 {
     public class OrderDTO
     {
-        public int OrderDTOId { get; }
-        public int UserDTOId { get; set; }
+        public int Id { get; }
         public OrderStatusDTO Status { get; set; }
         public decimal TotalPrice { get; set; }
+        public int UserDTOId { get; set; }
 
-        public List<OrderItemDTO> OrderItemsDTO { get; set; }
         public UserDTO UserDTO { get; set; }
+        public List<OrderItemDTO> OrderItemsDTO { get; set; }    
     }
 }
