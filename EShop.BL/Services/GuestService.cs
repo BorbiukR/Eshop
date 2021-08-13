@@ -21,9 +21,9 @@ namespace EShop.BL.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ProductDTO> GetAllProducts()
+        public IEnumerable<ProductDTO> GetAll()
         {
-            var products = _unit.Products.FindAll();
+            var products = _unit.Products.FindAll().ToList();
            
             if (products == null)
                 return null;
@@ -31,7 +31,7 @@ namespace EShop.BL.Services
             return _mapper.Map<IEnumerable<ProductDTO>>(products);
         }
 
-        public ProductDTO GetProductById(int productId)
+        public ProductDTO FindById(int productId)
         {
             var product = _unit.Products.FindByCondition(x => x.Id == productId).FirstOrDefault();
             
@@ -41,7 +41,7 @@ namespace EShop.BL.Services
             return _mapper.Map<ProductDTO>(product);
         }
 
-        public ProductDTO GetProductByName(string productName)
+        public ProductDTO FindByName(string productName)
         {
             var product = _unit.Products.FindByCondition(x => x.Name == productName).FirstOrDefault();
 
@@ -81,8 +81,8 @@ namespace EShop.BL.Services
             var newUser = new UserDTO() { Email = email, Password = password };
             var mapperNewUser = _mapper.Map<User>(newUser);
            
-            _unit.Users.Add(mapperNewUser);
-            _unit.Save();
+            _unit.Users.AddAsync(mapperNewUser);
+            _unit.SaveAsync();
 
             NotifyOfLogginIn?.Invoke(newUser);
 

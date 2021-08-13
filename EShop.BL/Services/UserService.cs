@@ -24,7 +24,6 @@ namespace EShop.BL.Services
             if (product == null)
                 return "There is no such product in the store.";
 
-
             var newOrder = _mapper.Map<Order>(orderDTO);
 
             var order = _unit.Orders.FindByCondition(x => x.Id == newOrder.Id).FirstOrDefault();
@@ -45,7 +44,7 @@ namespace EShop.BL.Services
                 var newItemMapper = _mapper.Map<OrderItem>(newItem);
 
                 newOrder.OrderItems.Add(newItemMapper);
-                _unit.Save();       
+                _unit.SaveAsync();       
 
                 return newItem.ToString();
             }
@@ -69,7 +68,7 @@ namespace EShop.BL.Services
             order.Status = OrderStatus.CanceledByUser;
 
             _unit.Users.FindByCondition(x => x.Id == userId).FirstOrDefault().Balance += order.TotalPrice;
-            _unit.Save();
+            _unit.SaveAsync();
 
             return $"Order with ID {userId} cancelled. Money returned";
         }
@@ -83,7 +82,7 @@ namespace EShop.BL.Services
 
             user.Password = newPassword;
 
-            _unit.Save();
+            _unit.SaveAsync();
 
             return "Password changed.";
         }
@@ -96,7 +95,7 @@ namespace EShop.BL.Services
 
         public IEnumerable<OrderDTO> SeeOrderHistory(int userId) 
         {
-            var orders = _unit.Orders.FindByCondition(x => x.UserId == userId);
+            var orders = _unit.Orders.FindByCondition(x => x.UserId == userId).ToList();
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
@@ -111,7 +110,7 @@ namespace EShop.BL.Services
                                         .FirstOrDefault()
                                         .Status = OrderStatus.Received;
 
-                _unit.Save();
+                _unit.SaveAsync();
 
                 return $"Status 'Received' set to order with ID {orderId}";
             }

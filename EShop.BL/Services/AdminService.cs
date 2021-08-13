@@ -14,26 +14,15 @@ namespace EShop.BL.Services
     {
         public AdminService(IUnitOfWork unit, IMapper mapper) : base(unit, mapper)  { }
 
-        public string AddProduct(string productName, 
-                                decimal productPrice, 
-                                string productDescription,
-                                ProductCategoryDTO productCategory)
+        public string AddProduct(ProductDTO product)
         {
-            if (productPrice <= 0 || productPrice >= 8_000_000_000)
+            if (product.Price <= 0 || product.Price >= 8_000_000_000)
                 return "Invalid price!";
-
-            var product  = new ProductDTO
-            {
-                Name = productName,
-                Price = productPrice,
-                Description = productDescription,
-                Category = productCategory
-            };
 
             var productMapper = _mapper.Map<Product>(product);
             
-            _unit.Products.Add(productMapper);
-            _unit.Save();
+            _unit.Products.AddAsync(productMapper);
+            _unit.SaveAsync();
 
             return "Product added.";
         }
@@ -69,8 +58,8 @@ namespace EShop.BL.Services
             order.Status = status;
 
             _unit.Orders.Update(order);
-            _unit.Save();
-            
+            _unit.SaveAsync();
+
             return "Status changed.";
         }
 
@@ -88,32 +77,24 @@ namespace EShop.BL.Services
             user.Password = newUserPassword;
             
             _unit.Users.Update(user);
-            _unit.Save();
+            _unit.SaveAsync();
 
             return "Password changed.";
         }
 
-        public string ModifyProduct(int productId, string newProductName = default, decimal newProductPrice = default, string newProductDescription = default, ProductCategoryDTO newProductCategory = default)
+        public string ModifyProduct(ProductDTO product)
         {
-            if (newProductName == default &&
-                newProductPrice == default &&
-                newProductDescription == default &&
-                newProductName == default)
-            {
-                return "You have not made any changes.";
-            }
-
-            var oldProduct = _unit.Products.FindByCondition(x => x.Id == productId);
+            var oldProduct = _unit.Products.FindByCondition(x => x.Id == product.Id);
 
             if (oldProduct == null)
                 return "No product with such ID";
 
             var newProduct = new ProductDTO() 
             { 
-                Name = newProductName,
-                Price = newProductPrice,
-                Description = newProductDescription,
-                Category = newProductCategory
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                Category = product.Category
             };
 
             if (newProduct.Price <= 0)
@@ -122,7 +103,7 @@ namespace EShop.BL.Services
             var mapperNewProduct = _mapper.Map<Product>(newProduct);
 
             _unit.Products.Update(mapperNewProduct);
-            _unit.Save();
+            _unit.SaveAsync();
 
             return "Product changed.";
         }
@@ -132,7 +113,7 @@ namespace EShop.BL.Services
             if (!UserExists(userId))
                 return "No user with such Id!";
 
-            var orders = _unit.Orders.FindByCondition(x => x.UserId == userId);
+            var orders = _unit.Orders.FindByCondition(x => x.UserId == userId).ToList();
 
             if (!orders.Any())
                 return "User hasn't made any purchase yet.";
@@ -156,7 +137,7 @@ namespace EShop.BL.Services
 
         public string SeeUsersInfo()
         {
-            var users = _unit.Users.FindAll();
+            var users = _unit.Users.FindAll().ToList();
 
             if (users != null)
             {

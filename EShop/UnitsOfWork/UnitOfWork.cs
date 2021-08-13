@@ -2,6 +2,7 @@
 using EShop.DAL;
 using EShop.DAL.Interfaces;
 using EShop.DAL.Repositories;
+using System.Threading.Tasks;
 
 namespace DAL.UnitsOfWork
 {
@@ -17,8 +18,8 @@ namespace DAL.UnitsOfWork
             _eShopContext = context;
         }
 
-        public void Save() => _eShopContext.SaveChanges();
-        
+        public async Task<int> SaveAsync() => await _eShopContext.SaveChangesAsync();
+
         public IUserRepository Users
         {
             get

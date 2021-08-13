@@ -11,7 +11,6 @@ namespace EShop.DAL
         public DbSet<OrderItem>  OrderItems { get; set; }
         public DbSet<ProductCategory> ProductCategorys { get; set; }
         
-
         public EShopContext() { }
 
         public EShopContext(DbContextOptions<EShopContext> options) : base(options)

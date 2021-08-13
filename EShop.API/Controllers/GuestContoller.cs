@@ -1,15 +1,7 @@
-﻿using AutoMapper;
-using Eshop.DAL.Interfaces;
-using EShop.API.Models.Request;
-using EShop.BL.DTOs;
-using EShop.BL.Interfaces;
-using EShop.DAL;
+﻿using EShop.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EShop.API.Controllers
 {
@@ -17,51 +9,75 @@ namespace EShop.API.Controllers
     [ApiController]
     public class GuestContoller : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unit;
         private readonly IGuestService _guestService;
+        private readonly ILogger<GuestContoller> _logger;
 
-        public GuestContoller(IUnitOfWork unit, IMapper mapper, IGuestService guestService)
+        public GuestContoller(IGuestService guestService, ILogger<GuestContoller> logger)
         {
-            _unit = unit;
-            _mapper = mapper;
             _guestService = guestService;
+            _logger = logger;
         }
 
-        [HttpGet("products/")]
+        [HttpGet("products")]
         public IActionResult GetAllProducts()
         {
             try
             {
-                var products =  _guestService.GetAllProducts();
+                var products = _guestService.GetAll();
+                
                 if (products == null)
-                {
                     return StatusCode(404, "Product not found");
-                }
-                var productsResult = _mapper.Map<List<ProductDTO>>(products);
-                return Ok(productsResult);
+
+                _logger.LogInformation($"Returned all products from database.");
+
+                return Ok(products);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500);
+                _logger.LogError($"Something went wrong inside GetAllProducts action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpGet("product/{productid}")]
-        public IActionResult GetProductById(int productId, [FromBody] ProductRequest productRequest)
+        [HttpGet("product/{id}")]
+        public IActionResult GetProductById(int productId)
         {
             try
             {
-                var products = _guestService.GetProductById(productId);
-                if (products == null)
-                {
+                var product = _guestService.FindById(productId);
+
+                if (product == null)
                     return StatusCode(404, "Product not found");
-                }
-                return Ok(_mapper.Map<ProductDTO>(productRequest));
+
+                _logger.LogInformation($"Returned product with {product.Id} Id from database.");
+
+                return Ok(product);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500);
+                _logger.LogError($"Something went wrong inside GetProductById action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("product/{productName}")]
+        public IActionResult GetProductByName(string productName)
+        {
+            try
+            {
+                var product = _guestService.FindByName(productName);
+
+                if (product == null)
+                    return StatusCode(404, "Product not found");
+
+                _logger.LogInformation($"Returned product with {product.Id} Id from database.");
+
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetProductById action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
     }

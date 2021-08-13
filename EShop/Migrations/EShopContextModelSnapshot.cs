@@ -19,25 +19,28 @@ namespace EShop.DAL.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EShop.DAL.Enums.ProductCategory", b =>
+            modelBuilder.Entity("EShop.DAL.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId")
+                    b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("ProductCategorys");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("EShop.DAL.Models.OrderItem", b =>
@@ -65,31 +68,7 @@ namespace EShop.DAL.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("Eshop.DAL.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Eshop.DAL.Models.Product", b =>
+            modelBuilder.Entity("EShop.DAL.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +89,28 @@ namespace EShop.DAL.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Eshop.DAL.Models.User", b =>
+            modelBuilder.Entity("EShop.DAL.Models.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("ProductCategorys");
+                });
+
+            modelBuilder.Entity("EShop.DAL.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,26 +134,26 @@ namespace EShop.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EShop.DAL.Enums.ProductCategory", b =>
+            modelBuilder.Entity("EShop.DAL.Models.Order", b =>
                 {
-                    b.HasOne("Eshop.DAL.Models.Product", "Product")
-                        .WithOne("ProductCategory")
-                        .HasForeignKey("EShop.DAL.Enums.ProductCategory", "ProductId")
+                    b.HasOne("EShop.DAL.Models.User", "User")
+                        .WithOne("Order")
+                        .HasForeignKey("EShop.DAL.Models.Order", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EShop.DAL.Models.OrderItem", b =>
                 {
-                    b.HasOne("Eshop.DAL.Models.Order", "Order")
+                    b.HasOne("EShop.DAL.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Eshop.DAL.Models.Product", "Product")
+                    b.HasOne("EShop.DAL.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
 
@@ -162,28 +162,28 @@ namespace EShop.DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Eshop.DAL.Models.Order", b =>
+            modelBuilder.Entity("EShop.DAL.Models.ProductCategory", b =>
                 {
-                    b.HasOne("Eshop.DAL.Models.User", "User")
-                        .WithOne("Order")
-                        .HasForeignKey("Eshop.DAL.Models.Order", "UserId")
+                    b.HasOne("EShop.DAL.Models.Product", "Product")
+                        .WithOne("ProductCategory")
+                        .HasForeignKey("EShop.DAL.Models.ProductCategory", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Eshop.DAL.Models.Order", b =>
+            modelBuilder.Entity("EShop.DAL.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("Eshop.DAL.Models.Product", b =>
+            modelBuilder.Entity("EShop.DAL.Models.Product", b =>
                 {
                     b.Navigation("ProductCategory");
                 });
 
-            modelBuilder.Entity("Eshop.DAL.Models.User", b =>
+            modelBuilder.Entity("EShop.DAL.Models.User", b =>
                 {
                     b.Navigation("Order");
                 });

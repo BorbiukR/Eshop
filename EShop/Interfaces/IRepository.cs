@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Eshop.DAL.Interfaces
 {
     public interface IRepository<T> where T : class
-    { 
-        void Add(T value);
+    {
+        Task AddAsync(T value);
+
         void Update(T value);
+
         void Delete(T value);
-        IEnumerable<T> FindAll();
-        IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression);
+
+        IQueryable<T> FindAll();
+
+        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
     }
 }

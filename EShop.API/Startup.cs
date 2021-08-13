@@ -1,4 +1,7 @@
-using EShop.API.Extentions;
+using DAL.UnitsOfWork;
+using Eshop.DAL.Interfaces;
+using EShop.BL.Interfaces;
+using EShop.BL.Services;
 using EShop.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,15 +24,16 @@ namespace EShop.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureAutoMapper();
-            services.ConfigureUnitOfWork();
-            services.ConfigureBLLServices();
-
-            services.ConfigureCors();
-            services.ConfigureIISIntegration();
-
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<EShopContext>(options => options.UseSqlServer(connection));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGuestService, GuestService>();
 
             services.AddControllers();
            
@@ -61,8 +65,6 @@ namespace EShop.API
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
