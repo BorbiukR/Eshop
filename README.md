@@ -2,11 +2,13 @@
 The application simulates the work of an online store.
 
 1. Provides the following roles and functionality:
+
 1.1. The role of the "Guest". Features:
 - view the list of goods;
 - search for goods by name;
 - registration of the user's burn record;
 - Login to the online store with an account.
+
 1.2. The role of "Registered user". Features:
 - view the list of goods;
 - search for goods by name;
@@ -16,6 +18,7 @@ The application simulates the work of an online store.
 - setting the status of the order "Received";
 - change of personal information;
 - sign out of your account.
+
 1.3.Role "Administrator". Features:
 - view the list of goods;
 - search for goods by name;
