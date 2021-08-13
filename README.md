@@ -1,5 +1,6 @@
 # Eshop with 3 roles
 The application simulates the work of an online store.
+
 1. Provides the following roles and functionality:
 1.1. The role of the "Guest". Features:
 - view the list of goods;
@@ -25,12 +26,13 @@ The application simulates the work of an online store.
 - change of information about the product;
 - change of refractive status;
 - sign out of your account.
+
 2. When creating a new order, the status "New" is automatically set.
 All other statuses are set manually by the administrator: “Canceled
 administrator "," Payment received "," Sent "," Received ",
 "Completed." In addition to "Canceled by the user" - set by the user
 to "Received".
 
-- Incorrect user actions are provided
+3. Incorrect user actions are provided
 
 - Implemented Multilayered architecture (DAL + BLL + Web API)
