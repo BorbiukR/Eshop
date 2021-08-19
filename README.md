@@ -1,4 +1,5 @@
-# Eshop with 3 roles
+# Implemented Multilayered architecture (DAL + BLL + Web API)
+
 The application simulates the work of an online store.
 
 1. Provides the following roles and functionality:
@@ -37,5 +38,3 @@ administrator "," Payment received "," Sent "," Received ",
 to "Received".
 
 3. Incorrect user actions are provided
-
-- Implemented Multilayered architecture (DAL + BLL + Web API)
