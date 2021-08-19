@@ -34,7 +34,7 @@ namespace EShop.BL.Services
         public ProductDTO FindById(int productId)
         {
             var product = _unit.Products.FindByCondition(x => x.Id == productId).FirstOrDefault();
-            
+
             if (product == null)
                 return null;
 

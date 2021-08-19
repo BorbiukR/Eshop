@@ -8,6 +8,6 @@
         public bool IsAdmin { get; set; }
         public decimal Balance { get; set; }
 
-        public OrderDTO OrderDTO { get; set; }
+        public OrderDTO Order { get; set; }
     }
 }

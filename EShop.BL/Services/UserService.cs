@@ -40,7 +40,7 @@ namespace EShop.BL.Services
             else
             {            
                 var newProductMapper = _mapper.Map<ProductDTO>(product);
-                var newItem = new OrderItemDTO() { ProductDTO = newProductMapper };
+                var newItem = new OrderItemDTO() { Product = newProductMapper };
                 var newItemMapper = _mapper.Map<OrderItem>(newItem);
 
                 newOrder.OrderItems.Add(newItemMapper);

@@ -1,5 +1,7 @@
+using AutoMapper;
 using DAL.UnitsOfWork;
 using Eshop.DAL.Interfaces;
+using EShop.API.MapperProfiles;
 using EShop.BL.Interfaces;
 using EShop.BL.Services;
 using EShop.DAL;
@@ -28,6 +30,14 @@ namespace EShop.API
             services.AddDbContext<EShopContext>(options => options.UseSqlServer(connection));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddAutoMapper(typeof(Startup));
 

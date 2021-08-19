@@ -1,4 +1,5 @@
-﻿using EShop.BL.Interfaces;
+﻿using EShop.BL.DTOs;
+using EShop.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -39,15 +40,15 @@ namespace EShop.API.Controllers
             }
         }
 
-        [HttpGet("product/{id}")]
-        public IActionResult GetProductById(int productId)
+        [HttpGet("products/{id}")]
+        public IActionResult GetProductById(int id)
         {
             try
             {
-                var product = _guestService.FindById(productId);
+                var product = _guestService.FindById(id);
 
-                if (product == null)
-                    return StatusCode(404, "Product not found");
+                //if (product == null)
+                //    return StatusCode(404, "Product not found");
 
                 _logger.LogInformation($"Returned product with {product.Id} Id from database.");
 

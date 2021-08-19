@@ -3,10 +3,10 @@
     public class OrderItemDTO
     {
         public int Id { get; set; }
-        public ProductDTO ProductDTO { get; set; }
+        public ProductDTO Product { get; set; }
         public int Quantity { get; set; }
-        public int OrderDTOId { get; set; }
+        public int OrderId { get; set; }
 
-        public OrderDTO OrderDTO { get; set; }
+        public OrderDTO Order { get; set; }
     }
 }

@@ -12,3 +12,4 @@ C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.dll
 C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\ref\EShop.DAL.dll
 C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.pdb
 C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.genruntimeconfig.cache
+C:\Users\user\source\repos\EShop\EShop\obj\Debug\net5.0\EShop.DAL.csprojAssemblyReference.cache

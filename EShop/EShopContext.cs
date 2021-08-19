@@ -41,7 +41,7 @@ namespace EShop.DAL
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasOne(x => x.ProductCategory)
+                entity.HasOne(x => x.Category)
                     .WithOne(x => x.Product);
                 entity.HasKey(x => x.Id);
             });

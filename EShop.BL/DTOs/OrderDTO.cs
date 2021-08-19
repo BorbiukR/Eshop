@@ -8,9 +8,9 @@ namespace EShop.BL.DTOs
         public int Id { get; set; }
         public OrderStatusDTO Status { get; set; }
         public decimal TotalPrice { get; set; }
-        public int UserDTOId { get; set; }
+        public int UserId { get; set; }
 
-        public UserDTO UserDTO { get; set; }
-        public List<OrderItemDTO> OrderItemsDTO { get; set; }    
+        public UserDTO User { get; set; }
+        public List<OrderItemDTO> OrderItems { get; set; }    
     }
 }
